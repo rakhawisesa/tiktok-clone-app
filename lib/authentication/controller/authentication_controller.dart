@@ -111,10 +111,10 @@ class AuthenticationController extends GetxController {
   goToScreen(User? currentUser) {
     if (currentUser == null) {
       // User is not already logged in
-      Get.offAll(const LoginScreen());
+      Get.offAll(() => const LoginScreen());
     } else {
       // User is already logged in
-      Get.offAll(const HomeScreen());
+      Get.offAll(() => const HomeScreen());
     }
   }
 

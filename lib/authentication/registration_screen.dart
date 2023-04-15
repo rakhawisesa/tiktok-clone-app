@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get_core/get_core.dart';
-import 'package:get/get_instance/get_instance.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:simple_circular_progress_bar/simple_circular_progress_bar.dart';
 import 'package:tiktok_clone_app/authentication/controller/authentication_controller.dart';
@@ -63,7 +62,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                                       .captureImageWithCamera();
                                 },
                                 icon: const Icon(
-                                  Icons.camera,
+                                  Icons.camera_alt,
                                   size: 50,
                                   color: Colors.white,
                                 ),
