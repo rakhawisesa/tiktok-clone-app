@@ -38,6 +38,8 @@ class _UploadFormState extends State<UploadForm> {
     playerController!.play();
     playerController!.setVolume(2);
     playerController!.setLooping(true);
+    // playerController!
+    //     .setLooping(false); // For Testing Purpose, due to Firebase Free Plan
   }
 
   @override
