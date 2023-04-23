@@ -149,6 +149,7 @@ class _ForYouVideoScreenState extends State<ForYouVideoScreen> {
                                                 eachVideoInfo.userProfileImage
                                                     .toString(),
                                               ),
+                                              fit: BoxFit.cover,
                                             ),
                                           ),
                                         ),

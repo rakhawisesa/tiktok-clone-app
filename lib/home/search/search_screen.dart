@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:tiktok_clone_app/authentication/model/user.dart';
+import 'package:tiktok_clone_app/home/profile/profile_screen.dart';
+import 'package:tiktok_clone_app/home/search/controller/search_controller.dart';
 import 'package:tiktok_clone_app/theme_manager/font_manager.dart';
+import 'package:tiktok_clone_app/theme_manager/image_icon_manager.dart';
 
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
@@ -9,15 +14,109 @@ class SearchScreen extends StatefulWidget {
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  SearchController controllerSearch = Get.put(SearchController());
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text(
-          "Search Screen",
-          style: FontFamilyConstant.fontFamilyPrimary,
+    return Obx(() {
+      return Scaffold(
+        appBar: AppBar(
+          titleSpacing: 6,
+          backgroundColor: Colors.black54,
+          title: TextFormField(
+            decoration: InputDecoration(
+              focusedBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.white70,
+                  width: 2.0,
+                ),
+                borderRadius: BorderRadius.circular(6.0),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderSide: const BorderSide(
+                  color: Colors.white70,
+                  width: 2.0,
+                ),
+                borderRadius: BorderRadius.circular(6.0),
+              ),
+              hintText: "Search here...",
+              hintStyle: const TextStyle(
+                fontSize: 18,
+                color: Colors.grey,
+              ),
+              prefixIcon: const Icon(
+                Icons.search,
+                color: Colors.grey,
+              ),
+              contentPadding: const EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
+            ),
+            onFieldSubmitted: (textInput) {
+              controllerSearch.searchForuser(textInput);
+            },
+          ),
         ),
-      ),
-    );
+        body: controllerSearch.usersSearchedList.isEmpty
+            ? Center(
+                child: Image.asset(
+                  "${ImageIconManager.assetPath}search.png",
+                  width: MediaQuery.of(context).size.width * 0.5,
+                ),
+              )
+            : ListView.builder(
+                itemCount: controllerSearch.usersSearchedList.length,
+                itemBuilder: (context, index) {
+                  User eachSearchedUserRecord =
+                      controllerSearch.usersSearchedList[index];
+
+                  return Padding(
+                    padding: const EdgeInsets.only(left: 20, right: 20, top: 4),
+                    child: Card(
+                      child: InkWell(
+                        onTap: () {
+                          Get.to(ProfileScreen(
+                              visitUserID:
+                                  eachSearchedUserRecord.uid.toString()));
+                        },
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundImage: NetworkImage(
+                                eachSearchedUserRecord.image.toString()),
+                          ),
+                          title: Text(
+                            eachSearchedUserRecord.name.toString(),
+                            style:
+                                FontFamilyConstant.fontFamilyPrimary.copyWith(
+                              fontSize: 18,
+                              color: Colors.white,
+                            ),
+                          ),
+                          subtitle: Text(
+                            eachSearchedUserRecord.email.toString(),
+                            style:
+                                FontFamilyConstant.fontFamilyPrimary.copyWith(
+                              fontSize: 12,
+                              color: Colors.white70,
+                            ),
+                          ),
+                          trailing: IconButton(
+                            onPressed: () {
+                              Get.to(ProfileScreen(
+                                  visitUserID:
+                                      eachSearchedUserRecord.uid.toString()));
+                            },
+                            icon: const Icon(
+                              Icons.navigate_next_outlined,
+                              size: 24,
+                              color: Colors.redAccent,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+      );
+    });
   }
 }

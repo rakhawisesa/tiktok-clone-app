@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tiktok_clone_app/global.dart';
 import 'package:tiktok_clone_app/home/following/followings_video_screen.dart';
 import 'package:tiktok_clone_app/home/for_you/for_you_video_screen.dart';
 import 'package:tiktok_clone_app/home/profile/profile_screen.dart';
@@ -20,7 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
     const SearchScreen(),
     const UploadVideoScreen(),
     const FollowingsVideoScreen(),
-    const ProfileScreen(),
+    ProfileScreen(
+      visitUserID: currentUserID,
+    ),
   ];
 
   @override
